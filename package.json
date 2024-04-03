@@ -1,0 +1,11 @@
+{
+  "name": "visualization-plugin-gsft",
+  "version": "1.0.0",
+  "description": "Visualization plugin for grnsft. Convert carbon data into insights.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ramgsuri",
+  "license": "ISC"
+}
