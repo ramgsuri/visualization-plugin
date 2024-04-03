@@ -7,5 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ramgsuri",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "chart.js": "^4.4.2",
+    "csv-parser": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramgsuri/visualization-plugin-gsft.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ramgsuri/visualization-plugin-gsft/issues"
+  },
+  "homepage": "https://github.com/ramgsuri/visualization-plugin-gsft#readme"
 }

@@ -1,5 +1,6 @@
-import { createCanvas } from 'canvas';
-import Chart from 'chart.js';
+const createCanvas = require('canvas').createCanvas;
+const Chart = require('chart.js');
+
 
 const Visualization = (globalConfig) => {
 
@@ -9,7 +10,7 @@ const Visualization = (globalConfig) => {
     };
 
     // Function to fetch data from csv
-    async function fetchDataFromCSV(csvFilePath: string): Promise<number[]> {
+   async function fetchDataFromCSV(csvFilePath) {
         // Create an array to store the data from the CSV file
         const data = [];
         // Use fs.createReadStream() to read the CSV file
@@ -33,7 +34,7 @@ const Visualization = (globalConfig) => {
     }
 
     // Function to create graph image and plot
-    async function createGraph(): Promise<void> {
+    async function createGraph() {
         // Fetch data
         let filePath = '';
         const data = await fetchDataFromCSV(filePath);
@@ -108,4 +109,7 @@ const Visualization = (globalConfig) => {
         execute,
     };
 };
+
+Visualization()
+
 exports.Visualization = Visualization;
