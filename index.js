@@ -9,77 +9,63 @@ const Visualization = (globalConfig) => {
         kind: 'execute',
     };
 
-    // Function to fetch data from csv
-   async function fetchDataFromCSV(csvFilePath) {
-        // Create an array to store the data from the CSV file
-        const data = [];
-        // Use fs.createReadStream() to read the CSV file
-        fs.createReadStream(csvFilePath)
-            // Pipe the read stream to csv-parser to parse the CSV data
-            .pipe(csv({ headers: true })) // Specify { headers: true } to parse the first row as headers
-            // Use the 'data' event to capture each row of data
-            .on('data', (row) => {
-                // Push each row to the 'data' array
-                data.push(row);
-            })
-            // Use the 'end' event to signal the end of the CSV parsing
-            .on('end', () => {
-                // Print the parsed data
-                console.log(data);
-            })
-            // Handle errors
-            .on('error', (error) => {
-                console.error('Error reading CSV file:', error);
-            });
+    async function fetchDataFromCSV(csvFilePath) {
+        let results = [];
+    
+        const csvPromise = new Promise((resolve, reject) =>
+            fs.createReadStream(csvFilePath)
+                .pipe(csv())
+                .on('data', (data) => results.push(data))
+                .on('end', () => resolve(results))
+                .on("error", (err) => reject(err))
+        );
+        return await csvPromise;
     }
 
-    // Function to create graph image and plot
-    async function createGraph() {
-        // Fetch data
-        let filePath = '';
+    async function createGraph(filePath) {
         const data = await fetchDataFromCSV(filePath);
-
-        // Create canvas
+        console.log("DEBUG: Data", data)
+    
         const canvas = createCanvas(800, 600);
         const ctx = canvas.getContext('2d');
-
-        // Create chart
-        const chart = new Chart(ctx, {
+    
+        const legend1 = data[0].Path;
+        const legend2 = data[1].Path;
+    
+        const labels = [];
+        for (let key in data[0]) {
+            if (key != "Path")
+                labels.push(key)
+        }
+    
+        delete data[0].Path;
+        delete data[1].Path;
+    
+        const dataset1 = Object.values(data[0]);
+        const dataset2 = Object.values(data[1]);
+    
+        new Chart(ctx, {
             type: 'line',
             data: {
-                labels: data.map((_, index) => index.toString()),
+                labels: labels,
                 datasets: [{
-                    label: 'Data',
-                    data: data,
+                    label: legend1,
+                    data: dataset1,
                     borderColor: 'rgb(75, 192, 192)',
                     borderWidth: 1
+                },
+                {
+                    label: legend2,
+                    data: dataset2,
+                    borderColor: 'rgb(50, 50, 50)',
+                    borderWidth: 1
                 }]
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Index'
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
-                        }
-                    }]
-                }
             }
         });
-
-        // Save chart as image
+    
         const imageBuffer = canvas.toBuffer('image/png');
-        // You can save the imageBuffer to a file or send it over the network
-        // For example, fs.writeFileSync('chart.png', imageBuffer);
-    }
+        fs.writeFileSync('chart.png', imageBuffer);
+    };
 
     const execute = async (inputs, config) => {
         const keepExisting = globalConfig['keep-existing'] === true;
@@ -90,7 +76,7 @@ const Visualization = (globalConfig) => {
             let outputValue = input[inputParameter];
             // read the data and create Graph
 
-            let outputVisual = createGraph();
+            createGraph();
             if (input[inputParameter]) {
                 if (!keepExisting) {
                     delete input[inputParameter];
