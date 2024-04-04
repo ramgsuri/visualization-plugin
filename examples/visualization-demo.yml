@@ -1,0 +1,31 @@
+name: visualization-demo
+description: Generates Visualization for Carbon Emission Data Products and unlock insights from data
+tags:
+initialize:
+  plugins:
+    visualization-plugin:
+      method: Visualization
+      path: "visualization-plugin-gsft"
+tree:
+  children:
+    child:
+      pipeline:
+        - visualization-plugin
+      config:
+        visualization-plugin:
+          output-path: ./examples/outputs/output.png
+      inputs:
+        - data-source: ./examples/inputs/computed.csv
+#      inputs:
+#        - timestamp: 2023-07-06T00:00
+#          server-name: server-1
+#          operational-carbon: 0.02
+#          embodied-carbon: 5
+#          energy: 3.5
+#          carbon: 5.02
+#        - timestamp: 2023-07-06T00:10
+#          server-name: server-2
+#          operational-carbon: 0.03
+#          embodied-carbon: 4
+#          energy: 2.9
+#          carbon: 4.03
