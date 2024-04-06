@@ -2,7 +2,52 @@ name: visualization-demo
 description: Generates Visualization for Carbon Emission Data Products and unlock insights from data
 tags:
 initialize:
+  outputs: ["yaml"]
   plugins:
+    operational-carbon:
+      path: '@grnsft/if-plugins'
+      method: Multiply
+      global-config:
+        input-parameters: ['cpu/energy', 'grid/carbon-intensity']
+        output-parameter: 'carbon'
+    watttime:
+      path: '@grnsft/if-unofficial-plugins'
+      method: WattTimeGridEmissions   
+    teads-curve:
+      path: '@grnsft/if-unofficial-plugins'
+      method: TeadsCurve
+      global-config:
+        interpolation: spline
+    cloud-metadata:
+      method: CloudMetadata
+      path: "@grnsft/if-plugins"
+    mock-observations:
+      path: '@grnsft/if-plugins'
+      method: MockObservations
+      global-config:
+        timestamp-from: '2024-03-05T00:00:00.000Z'
+        timestamp-to: '2024-03-05T01:00:00.000Z'
+        duration: 600
+        components:
+          - name: server-1
+            cloud/instance-type: Standard_E64_v3
+            cloud/region: westus3
+          - name: server-2
+            cloud/instance-type: Standard_E64_v3
+            cloud/region: westus3    
+          # - name: server-2-Maharashtra
+          #   cloud/instance-type: c5d.4xlarge # compute optimised
+          #   cloud/region: ap-south-1  
+          # - name: server-3-India
+          #   cloud/instance-type: r5.24xlarge #memory optimised
+          #   cloud/region: ap-south-2          
+        generators:
+          common:
+            cloud/vendor: azure #aws
+          randint:
+            cpu/utilization:
+              min: 1
+              max: 99
     visualization-plugin:
       method: Visualization
       path: "visualization-plugin-gsft"
@@ -10,22 +55,12 @@ tree:
   children:
     child:
       pipeline:
+        - mock-observations
+        - cloud-metadata
+        - teads-curve
+        - watttime
+        - operational-carbon
         - visualization-plugin
       config:
         visualization-plugin:
-          output-path: ./examples/outputs/output.png
-      inputs:
-        - data-source: ./examples/inputs/computed.csv
-#      inputs:
-#        - timestamp: 2023-07-06T00:00
-#          server-name: server-1
-#          operational-carbon: 0.02
-#          embodied-carbon: 5
-#          energy: 3.5
-#          carbon: 5.02
-#        - timestamp: 2023-07-06T00:10
-#          server-name: server-2
-#          operational-carbon: 0.03
-#          embodied-carbon: 4
-#          energy: 2.9
-#          carbon: 4.03
+          output-path: ./examples/outputs/emission-report.html

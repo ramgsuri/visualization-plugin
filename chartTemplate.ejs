@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carbon Emissions Visualisation</title>
+    <style>
+        .carbonPieChart {
+            width: 100%;
+            height: 400px;
+        }
+        .carbonBarChart {
+            width: 100%;
+            height: 400px;
+        }
+        .cpuBarChart {
+            width: 100%;
+            height: 400px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 10px;
+            padding: 10px;
+        }
+        .faded{
+            color: rgb(134, 134, 134);
+        }
+    </style>
+</head>
+<body>
+    <h1>Emissions Visualisation</h1>
+    <hr />
+    <p class="faded">From <b> <%=new Date(startDate)%> </b> to <b> <%=new Date(endDate)%> </b> </p>
+    <br />
+    <div class="grid-container">
+        <div class="grid-item">
+            <div class="carbonPieChart">
+                <canvas id="carbonPieChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="carbonBarChart">
+                <canvas id="carbonBarChart" width="400" height="400"></canvas>
+              </div>
+        </div>
+        <div class="grid-item">
+            <div class="cpuBarChart">
+                <canvas id="cpuBarChart" width="400" height="400"></canvas>
+              </div>
+        </div>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var cpuCtx = document.getElementById('cpuBarChart').getContext('2d');
+    var carbonCtx = document.getElementById('carbonBarChart').getContext('2d');
+    var carbonPieCtx = document.getElementById('carbonPieChart').getContext('2d');
+
+    var carbonChartData = '<%-JSON.stringify(carbonBarChart)%>';
+    var cpuChartData = '<%-JSON.stringify(cpuEnergyBarChart)%>';
+    var carbonPieChartData = '<%-JSON.stringify(carbonPieChart)%>';
+    
+    var carbonChart = new Chart(carbonCtx, JSON.parse(carbonChartData));
+    var cpuChart = new Chart(cpuCtx, JSON.parse(cpuChartData));
+    var carbonPieChart = new Chart(carbonPieCtx, JSON.parse(carbonPieChartData));
+  </script>
+</body>
+</html>
