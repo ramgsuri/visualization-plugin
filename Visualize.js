@@ -1,12 +1,12 @@
 const { createCanvas } = require('canvas');
 const { Chart, registerables } = require('chart.js');
-const csv = require('csv-parser')
-const fs = require('fs')
+const csv = require('csv-parser');
+const fs = require('fs');
 
 Chart.register(...registerables);
 
 async function fetchDataFromCSV(csvFilePath) {
-    let results = [];
+    const results = [];
 
     const csvPromise = new Promise((resolve, reject) =>
         fs.createReadStream(csvFilePath)
@@ -29,9 +29,9 @@ const createDatasets = function (rows) {
                 label: label,
                 data: Object.values(rowData),
                 borderWidth: 1
-            }
+            };
         });
-}
+};
 
 async function createGraph(filePath) {
     const data = await fetchDataFromCSV(filePath);

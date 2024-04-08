@@ -43,9 +43,9 @@ const pieChartData = {
           }
         }
       },
-}
+};
 
 module.exports = {
     barChartData,
     pieChartData
-}
+};

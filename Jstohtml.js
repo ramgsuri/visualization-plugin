@@ -1,6 +1,6 @@
 const fs = require('fs');
-const ejs  = require('ejs')
-const { barChartData, pieChartData } = require("./chartConfig")
+const ejs  = require('ejs');
+const { barChartData, pieChartData } = require("./chartConfig");
 const templatePath = 'chartTemplate.ejs';
 
 
@@ -22,8 +22,8 @@ const generateHTML = (carbonBarChart, cpuEnergyBarChart, carbonPieChart, startDa
         }
         console.log('HTML file with chart has been created.');
     });
-    })
-}
+    });
+};
 
 
 const buildChartData = (timestamp, serverCarbonUtil) => {
@@ -33,8 +33,8 @@ const buildChartData = (timestamp, serverCarbonUtil) => {
     carbonBarChart.data.labels = timestamp;
     cpuEnergyBarChart.data.labels = timestamp;
     carbonPieChart.data.labels = Object.keys(serverCarbonUtil);
-    carbonBarChart.options.plugins.title.text = "Carbon Emission vs time"
-    cpuEnergyBarChart.options.plugins.title.text = "CPU energy vs time"
+    carbonBarChart.options.plugins.title.text = "Carbon Emission vs time";
+    cpuEnergyBarChart.options.plugins.title.text = "CPU energy vs time";
     
     Object.keys(serverCarbonUtil).forEach(serverData => {
         carbonBarChart.data.datasets.push({
@@ -47,8 +47,8 @@ const buildChartData = (timestamp, serverCarbonUtil) => {
             data: serverCarbonUtil[serverData]['cpu-energy'],
             borderWidth: 1 
         });
-        let totalCarbonValue = serverCarbonUtil[serverData].carbon.reduce((totalCarbonVal, carbonVal) => totalCarbonVal+carbonVal);
-        carbonPieChart.data.datasets[0].data.push(totalCarbonValue)
+        const totalCarbonValue = serverCarbonUtil[serverData].carbon.reduce((totalCarbonVal, carbonVal) => totalCarbonVal+carbonVal);
+        carbonPieChart.data.datasets[0].data.push(totalCarbonValue);
     });
     
     console.log("Final carbon bar chart object", carbonPieChart);
@@ -57,8 +57,8 @@ const buildChartData = (timestamp, serverCarbonUtil) => {
         carbonBarChart,
         cpuEnergyBarChart,
         carbonPieChart
-    }
-}
+    };
+};
 
 
 const generateChartMetaData = (chartCSVData) => {
@@ -80,13 +80,13 @@ const generateChartMetaData = (chartCSVData) => {
                     'cpu-energy': [ data['cpu/energy'] ]
             };
         }
-    })
+    });
 
     return {
         timestamp,
         serverCarbonUtil
-    }
-}
+    };
+};
 
 const execute = (chartCSVData) => {
     // validateData(chartCSVData);
@@ -95,8 +95,8 @@ const execute = (chartCSVData) => {
 
     const { carbonBarChart, cpuEnergyBarChart, carbonPieChart } = buildChartData(timestamp, serverCarbonUtil);
 
-    generateHTML(carbonBarChart, cpuEnergyBarChart, carbonPieChart, startDate = timestamp[0], endDate = timestamp.slice(-1)[0]);
-}
+    generateHTML(carbonBarChart, cpuEnergyBarChart, carbonPieChart, timestamp[0], timestamp.slice(-1)[0]);
+};
 
 const chartCSVData = [
     {
@@ -375,6 +375,6 @@ const chartCSVData = [
       'grid/carbon-intensity': 1060.241360110065,
       carbon: 39.26005280411435
     }
-  ]
+  ];
 
   execute(chartCSVData);

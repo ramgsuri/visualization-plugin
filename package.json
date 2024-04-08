@@ -4,7 +4,9 @@
   "description": "Visualization plugin for grnsft. Convert carbon data into insights.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"WARN: no test specified\" && exit 0"
+    "test": "echo \"WARN: no test specified\" && exit 0",
+    "lint": "eslint",
+    "fix": "eslint --fix"
   },
   "author": "ramgsuri",
   "license": "MIT",
@@ -21,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/ramgsuri/visualization-plugin-gsft/issues"
   },
-  "homepage": "https://github.com/ramgsuri/visualization-plugin-gsft#readme"
+  "homepage": "https://github.com/ramgsuri/visualization-plugin-gsft#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0"
+  }
 }
