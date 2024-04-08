@@ -8,6 +8,10 @@ Visualization plugin requires:
 - array containing carbon emission and energy usage data by the servers (required parameters are shown in the example below)
 - output file path as config
 
+### A sample Report
+![image](https://github.com/ramgsuri/visualization-plugin/assets/31445077/4abd486c-77db-4c2c-ba11-188bdc2befd7)
+
+
 #### API usage
 
 ```
