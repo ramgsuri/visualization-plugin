@@ -1,0 +1,27 @@
+name: visualization
+description: Simple demo of visualization plugin
+tags:
+initialize:
+  plugins:
+    visualization-plugin:
+      method: Visualization
+      path: "visualization-plugin-gsft"
+tree:
+  children:
+    child:
+      pipeline:
+        - visualization-plugin
+      inputs:
+        - timestamp: '2024-03-05T00:00:00.000Z'
+          name: 'server-1'
+          cpu/energy: 0.045017969268292685
+          grid/carbon-intensity: 369.4212640011265
+          carbon: 16.63059510985655
+        - timestamp: '2024-03-05T00:00:00.000Z'
+          name: 'server-2'
+          cpu/energy: 0.029579080198170734
+          grid/carbon-intensity: 369.4212640011265
+          carbon: 10.927141194798923
+      config:
+        visualization-plugin:
+          output-path: ./examples/outputs/emission-report.html
