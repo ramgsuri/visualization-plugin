@@ -7,8 +7,8 @@ Visualisation plugin is a visualisation data product that helps analyse the carb
 Visualization plugin requires:
 - array containing carbon emission and energy usage data by the servers (required parameters are shown in the example below)
 - output file path as config
-![Blank diagram](https://github.com/ramgsuri/visualization-plugin/assets/31445077/d6036906-cd5e-4a95-9df8-9b67b3f9a2ec)
 
+![Blank diagram (1)](https://github.com/ramgsuri/visualization-plugin/assets/31445077/96a675c6-2e6a-42e2-a0ae-6e70b780419c)
 
 ### A sample Report
 ![image](https://github.com/ramgsuri/visualization-plugin/assets/31445077/4abd486c-77db-4c2c-ba11-188bdc2befd7)
