@@ -8,7 +8,14 @@
     "lint": "eslint",
     "fix": "eslint --fix"
   },
-  "author": "ramgsuri",
+  "author": {
+    "name": "Ram G Suri",
+    "url": "https://github.com/ramgsuri"
+  },
+  "contributors": [
+    {"name":"Vansh Kapoor","url":"https://github.com/vanshkapoor"},
+    {"name":"Ravinder K","url":"https://github.com/ravinderj"}
+    ],
   "license": "MIT",
   "dependencies": {
     "canvas": "^2.11.2",
