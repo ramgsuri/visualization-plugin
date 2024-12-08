@@ -103,7 +103,7 @@ Example:
         visualization-plugin:
           output-path: ./examples/outputs/emission-report.html
 
-The full manifest file is available at [examples/manifests/visualization-demo.yml](examples/manifests/visualization-demo.yml).
+The full manifest file is available at [examples/manifests/visualization-pipeline.yml](examples/manifests/visualization-pipeline.yml).
 This pipeline requires some additional plugins to be installed:
 ```
 npm i -g @grnsft/if-plugins
